@@ -365,6 +365,8 @@
             text-decoration: none; transition: color 0.2s;
         }
         .proj-link:hover { color: #fb923c; }
+        .proj-links { display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.5rem; }
+        .tl-card .proj-links { flex-direction: row; flex-wrap: wrap; gap: 0.3rem 1rem; margin-top: 0.8rem; }
         .proj-wip { font-size: 0.82rem; color: var(--muted); }
 
         /* ── CONTACT ── */
@@ -478,24 +480,26 @@
 
             <span class="tag">Hello, I'm</span>
             <h1>Advitya<br>Singh</h1>
-            <h2>Computer Engineering · Union College</h2>
-            <p>Robotics &amp; software engineer at the intersection of <strong style="color:var(--white)">Physical AI, real-time control, and ROS2</strong>. Experienced architecting end-to-end robot software stacks — from SLAM and trajectory execution to cloud-connected teleoperation. Interested in bridging high-level AI inference with low-level actuator control.</p>
+            <h2><strong style="color:var(--white)">Computer Engineering @ Union College</strong></h2>
+            <h2>Passionate About: <strong style="color:var(--white)">Robotics, Software Development, AI</strong></h2>
+            <p>I am a curious robotics software engineer building <strong style="color:var(--white)">software for real robots</strong> using SLAM, Nav2 navigation, and perception to control and cloud-connected teleoperation. I've built a mobile robot's software stack from scratch at Crest Robotics and shipped production C++ at Siemens.</p>
             <div class="chips">
                 <span class="chip highlight">ROS2</span>
                 <span class="chip highlight">ros2_control</span>
                 <span class="chip highlight">SLAM</span>
+                <span class="chip highlight">Nav2</span>
                 <span class="chip highlight">LiDAR</span>
-                <span class="chip highlight">Eigen</span>
-                <span class="chip">C / C++</span>
-                <span class="chip">Python</span>
-                <span class="chip">Java</span>
-                <span class="chip">JavaScript</span>
-                <span class="chip">Docker</span>
-                <span class="chip">AWS</span>
+                <span class="chip highlight">C / C++</span>
+                <span class="chip highlight">Python</span>
+                <span class="chip highlight">Java</span>
+                <span class="chip highlight">JavaScript</span>
+                <span class="chip highlight">Docker</span>
+                <span class="chip highlight">AWS</span>
             </div>
             <div class="btn-row">
                 <a href="#contact" class="btn-orange">Get In Touch</a>
                 <a href="https://github.com/advityacode" target="_blank" class="btn-outline">GitHub</a>
+                <a href="https://www.linkedin.com/in/advitya-singh/" target="_blank" class="btn-outline">LinkedIn</a>
             </div>
         </div>
 
@@ -523,36 +527,59 @@
 
         <div class="timeline">
 
+            <!-- Siemens -->
+            <div class="tl-item fade-up">
+                <div class="tl-dot"></div>
+                <span class="tl-date">Jun 2026 – Sep 2026</span>
+                <div class="tl-card">
+                    <h3>Software Engineering Intern</h3>
+                    <div class="co">Siemens Inc.</div>
+                    <div class="loc">Schenectady, NY</div>
+                    <ul>
+                        <li>Cut defects in a power-systems <strong>C++ library by 41%</strong> by engineering 56 standardized C++ and Go data models with consistent object relationships across a large-scale distributed codebase</li>
+                        <li>Reduced the stale-data window from <strong>26 to 14 minutes</strong> by building Python/C++ logic that refreshes stale records against a SQL database</li>
+                        <li>Increased tested classes from <strong>12 to 56</strong> by writing unit tests in a code-reviewed, agile workflow</li>
+                    </ul>
+                </div>
+            </div>
+
             <!-- Crest Robotics -->
             <div class="tl-item fade-up">
-                <div class="tl-dot current"></div>
-                <span class="tl-date">Jan 2026 – Present</span>
-                <div class="tl-card current-role">
-                    <h3>Robotics Software Engineer Intern <span class="now-badge">Now</span></h3>
+                <div class="tl-dot"></div>
+                <span class="tl-date">Jan 2026 – Mar 2026</span>
+                <div class="tl-card">
+                    <h3>Robotics Software Engineer Intern</h3>
                     <div class="co">Crest Robotics</div>
                     <div class="loc">Sydney, Australia</div>
                     <ul>
                         <li>Architected <strong>end-to-end software stack leveraging ROS2 (Humble)</strong> and C++ to control a LiDAR-equipped mobile robot (LimX Tron1) — including ros2_control integration for joint-level actuation</li>
                         <li>Implemented <strong>SLAM-based localization and mapping</strong>, processing sensor data for real-time navigation, trajectory planning, and spatial awareness</li>
-                        <li>Designed <strong>real-time control loops</strong> with QoS-tuned ROS2 nodes, topics, and services to achieve low-latency, high-frequency hardware command delivery</li>
+                        <li>Achieved <strong>17 ms control latency</strong> by tuning QoS profiles, nodes, topics, and services for fault-tolerant sensor feedback</li>
                         <li>Built a <strong>cloud-connected, browser-based teleoperation interface</strong> using WebSockets for remote control, telemetry streaming, and live image processing</li>
                     </ul>
+                    <div class="proj-links">
+                        <a href="https://github.com/AdvityaCode/tron_ibis_stack" target="_blank" class="proj-link">↗ Main Stack on GitHub</a>
+                        <a href="https://github.com/AdvityaCode/crest_lidar_mapping" target="_blank" class="proj-link">↗ LiDAR Mapping on GitHub</a>
+                        <a href="https://github.com/AdvityaCode/crest_zed_mapping" target="_blank" class="proj-link">↗ ZED 2i Camera Mapping on GitHub</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- HCI Group -->
+            <!-- Open Robotics -->
             <div class="tl-item fade-up">
                 <div class="tl-dot"></div>
-                <span class="tl-date">Jun 2025 – Sep 2025</span>
+                <span class="tl-date">Nov 2025 – Apr 2026</span>
                 <div class="tl-card">
-                    <h3>Computer Vision Software Research Intern</h3>
-                    <div class="co">Human-Computer Interaction Group</div>
-                    <div class="loc">New York, NY</div>
+                    <h3>Open-Source Contributor (ros2_control)</h3>
+                    <div class="co">Open Robotics</div>
+                    <div class="loc">Remote</div>
                     <ul>
-                        <li>Integrated computer vision inference to track basketball movements using <strong>TensorFlow neural networks and MediaPipe</strong> for pose detection, improving accessibility by 13%</li>
-                        <li>Automated data collection and preprocessing pipelines with Postman and OpenCV, reducing manual data labeling</li>
-                        <li>Developed interactive, user-centered interfaces using <strong>React, JavaScript, Tkinter, and PyQt</strong>, reducing cognitive load by 21%</li>
+                        <li>Contributed to <strong>C++ open-source software</strong> by developing parameterized tests for non-default Controller Manager update rates, validating controller execution frequency and timing accuracy across configurations</li>
+                        <li>Improved <strong>Joint Trajectory Controller</strong> error handling with structured goal validation, descriptive error reporting, and unit tests</li>
                     </ul>
+                    <div class="proj-links">
+                        <a href="https://github.com/AdvityaCode/ros2_control" target="_blank" class="proj-link">↗ ros2_control on GitHub</a>
+                    </div>
                 </div>
             </div>
 
@@ -561,7 +588,7 @@
                 <div class="tl-dot"></div>
                 <span class="tl-date">Jan 2025 – Jun 2025</span>
                 <div class="tl-card">
-                    <h3>Robotics Research Engineer Intern</h3>
+                    <h3>Data Optimization Research Student</h3>
                     <div class="co">Collaborative Robotics &amp; Computer Human Empirical Testing Lab</div>
                     <div class="loc">New York, NY</div>
                     <ul>
@@ -600,15 +627,14 @@
                 </div>
                 <div class="skill-tags">
                     <span class="skill-tag">ROS</span>
-                    <span class="skill-tag">ROS2 Humble</span>
-                    <span class="skill-tag">ros2_control</span>
+                    <span class="skill-tag">ROS2 (Humble, Jazzy)</span>
                     <span class="skill-tag">SLAM</span>
+                    <span class="skill-tag">NavStack</span>
+                    <span class="skill-tag">Nav2</span>
                     <span class="skill-tag">LiDAR</span>
-                    <span class="skill-tag">Eigen</span>
-                    <span class="skill-tag">Real-time threading</span>
-                    <span class="skill-tag">Trajectory planning</span>
-                    <span class="skill-tag">ONNX inference</span>
-                    <span class="skill-tag">WebSocket / API</span>
+                    <span class="skill-tag">System Design</span>
+                    <span class="skill-tag">WebSockets</span>
+                    <span class="skill-tag">API</span>
                 </div>
             </div>
 
@@ -626,11 +652,12 @@
                     <span class="skill-tag">C++</span>
                     <span class="skill-tag">Python</span>
                     <span class="skill-tag">Java</span>
-                    <span class="skill-tag">JavaScript</span>
                     <span class="skill-tag">HTML</span>
-                    <span class="skill-tag">OCaml</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">Go</span>
+                    <span class="skill-tag">SQL</span>
                     <span class="skill-tag">Bash</span>
-                    <span class="skill-tag">MATLAB</span>
                 </div>
             </div>
 
@@ -641,16 +668,20 @@
                             <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
                         </svg>
                     </div>
-                    <h4>DevOps &amp; Tools</h4>
+                    <h4>Frameworks &amp; Tools</h4>
                 </div>
                 <div class="skill-tags">
                     <span class="skill-tag">Docker</span>
                     <span class="skill-tag">Git</span>
-                    <span class="skill-tag">Linux / Unix</span>
-                    <span class="skill-tag">ARM Keil</span>
                     <span class="skill-tag">REST APIs</span>
-                    <span class="skill-tag">Postman</span>
-                    <span class="skill-tag">Figma</span>
+                    <span class="skill-tag">AWS</span>
+                    <span class="skill-tag">EC2</span>
+                    <span class="skill-tag">GitHub Actions</span>
+                    <span class="skill-tag">CMake</span>
+                    <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">PyTorch</span>
+                    <span class="skill-tag">ReactJS</span>
+                    <span class="skill-tag">NextJS</span>
                 </div>
             </div>
 
@@ -658,19 +689,15 @@
                 <div class="skill-card-head">
                     <div class="skill-card-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+                            <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 17l.8 2.2L22 20l-2.2.8L19 23l-.8-2.2L16 20l2.2-.8z"/>
                         </svg>
                     </div>
-                    <h4>Cloud &amp; Frameworks</h4>
+                    <h4>AI-Assisted Development</h4>
                 </div>
                 <div class="skill-tags">
-                    <span class="skill-tag">AWS (EC2, S3)</span>
-                    <span class="skill-tag">GCP (BigQuery, Firebase)</span>
-                    <span class="skill-tag">TensorFlow</span>
-                    <span class="skill-tag">Keras</span>
-                    <span class="skill-tag">ReactJS</span>
-                    <span class="skill-tag">NextJS</span>
-                    <span class="skill-tag">NodeJS</span>
+                    <span class="skill-tag">GitHub Copilot</span>
+                    <span class="skill-tag">Cursor</span>
+                    <span class="skill-tag">Claude Code</span>
                 </div>
             </div>
 
@@ -688,6 +715,51 @@
         </div>
 
         <div class="projects-grid">
+
+            <div class="proj-card fade-up">
+                <!-- drone SVG icon -->
+                <div class="proj-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="6" height="6" rx="1"/>
+                        <path d="M9 9L6 6M15 9l3-3M9 15l-3 3M15 15l3 3"/>
+                        <circle cx="5" cy="5" r="2.5"/>
+                        <circle cx="19" cy="5" r="2.5"/>
+                        <circle cx="5" cy="19" r="2.5"/>
+                        <circle cx="19" cy="19" r="2.5"/>
+                    </svg>
+                </div>
+                <h3>Autonomous Drone Navigation &amp; CV Delivery</h3>
+                <p>Autonomous quadcopter for medicine delivery in rural areas, built for under $500. A PX4 flight controller is integrated with a ROS2 stack on a Raspberry Pi 5, with camera, perception, SLAM, and mission-planning nodes. A YOLOv6 detector runs on embedded hardware at 83% mAP for medicine detection. Airframe designed in SolidWorks.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">ROS2</span>
+                    <span class="proj-tag">PX4</span>
+                    <span class="proj-tag">C++</span>
+                    <span class="proj-tag">Python</span>
+                    <span class="proj-tag">YOLO</span>
+                    <span class="proj-tag">SLAM</span>
+                </div>
+            </div>
+
+            <div class="proj-card fade-up">
+                <!-- scanner SVG icon -->
+                <div class="proj-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="14" r="7"/>
+                        <circle cx="12" cy="14" r="2"/>
+                        <path d="M12 7V3M8 3h8"/>
+                    </svg>
+                </div>
+                <h3>TurtleBot3 Grocery Inventory Scanner</h3>
+                <p>ROS2-based autonomous inventory scanner on a TurtleBot3. An ML perception pipeline detects and classifies grocery items while coordinating with robot navigation, automating inventory monitoring in a simulated grocery store.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">ROS2</span>
+                    <span class="proj-tag">C++</span>
+                    <span class="proj-tag">Python</span>
+                    <span class="proj-tag">PyTorch</span>
+                    <span class="proj-tag">YOLO</span>
+                </div>
+                <a href="https://github.com/AdvityaCode/ros2_turtlebot3_grocery_inventory_scanner" target="_blank" class="proj-link">↗ View on GitHub</a>
+            </div>
 
             <div class="proj-card fade-up">
                 <!-- robot SVG icon -->
@@ -710,7 +782,12 @@
                     <span class="proj-tag">LiDAR</span>
                     <span class="proj-tag">WebSocket</span>
                 </div>
-                <span class="proj-wip">⚡ Active — Crest Robotics</span>
+                <span class="proj-wip">Crest Robotics · 2026</span>
+                <div class="proj-links">
+                    <a href="https://github.com/AdvityaCode/tron_ibis_stack" target="_blank" class="proj-link">↗ Main Stack on GitHub</a>
+                    <a href="https://github.com/AdvityaCode/crest_lidar_mapping" target="_blank" class="proj-link">↗ LiDAR Mapping on GitHub</a>
+                    <a href="https://github.com/AdvityaCode/crest_zed_mapping" target="_blank" class="proj-link">↗ ZED 2i Camera Mapping on GitHub</a>
+                </div>
             </div>
 
             <div class="proj-card fade-up">
@@ -730,19 +807,9 @@
                     <span class="proj-tag">Trajectory Upscaling</span>
                 </div>
                 <span class="proj-wip">GSoC Proposal — 350 hrs</span>
-            </div>
-
-            <div class="proj-card fade-up">
-                <div class="proj-icon">🏀</div>
-                <h3>Computer Vision Basketball Trainer</h3>
-                <p>Computer vision HCI application providing real-time pose-based feedback to help players improve their form and performance using TensorFlow and MediaPipe.</p>
-                <div class="proj-tags">
-                    <span class="proj-tag">Python</span>
-                    <span class="proj-tag">TensorFlow</span>
-                    <span class="proj-tag">MediaPipe</span>
-                    <span class="proj-tag">Computer Vision</span>
+                <div class="proj-links">
+                    <a href="https://github.com/AdvityaCode/ros2_control" target="_blank" class="proj-link">↗ View on GitHub</a>
                 </div>
-                <span class="proj-wip">⚡ In Progress</span>
             </div>
 
             <div class="proj-card fade-up">
@@ -753,18 +820,6 @@
                     <span class="proj-tag">C/C++</span>
                     <span class="proj-tag">Embedded</span>
                     <span class="proj-tag">STM32</span>
-                </div>
-                <span class="proj-wip">Private Repo</span>
-            </div>
-
-            <div class="proj-card fade-up">
-                <div class="proj-icon">🎵</div>
-                <h3>Automatic Music Transcription</h3>
-                <p>Software using Dynamic Time Warping and signal processing to provide immediate, accurate feedback to instrument players for skill improvement.</p>
-                <div class="proj-tags">
-                    <span class="proj-tag">Python</span>
-                    <span class="proj-tag">DSP</span>
-                    <span class="proj-tag">DTW</span>
                 </div>
                 <a href="https://github.com/AdvityaCode/COVID-19_Safe_Entryway_System" target="_blank" class="proj-link">↗ View on GitHub</a>
             </div>
