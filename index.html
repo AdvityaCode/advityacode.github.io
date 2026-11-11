@@ -367,6 +367,55 @@
         .proj-link:hover { color: #fb923c; }
         .proj-links { display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.5rem; }
         .tl-card .proj-links { flex-direction: row; flex-wrap: wrap; gap: 0.3rem 1rem; margin-top: 0.8rem; }
+
+        /* Feature rows: copy on one side, animated visual on the other */
+        .feature {
+            display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+            gap: 3rem; align-items: center; margin-bottom: 5.5rem;
+        }
+        .feature.rev .copy { order: 2; }
+        .feature-kicker {
+            font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--orange); margin-bottom: 0.6rem;
+        }
+        .feature h3 { font-size: 1.65rem; font-weight: 800; line-height: 1.15; margin-bottom: 0.9rem; }
+        .feature .copy p:not(.feature-kicker) { color: #999; font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.9rem; }
+        .feature .proj-tags { margin: 0.4rem 0 0.9rem; }
+        .feature .proj-links { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 1.2rem; margin-top: 0; }
+
+        .feature-stats { display: flex; flex-wrap: wrap; gap: 2rem; margin: 0.4rem 0 1rem; }
+        .feature-stats strong { display: block; font-size: 1.5rem; font-weight: 800; color: var(--orange); line-height: 1.15; }
+        .feature-stats span { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.3px; }
+
+        .viz {
+            margin: 0; background: #0c0c0c;
+            border: 1px solid var(--mid); border-radius: 14px; padding: 12px;
+            transition: border-color 0.25s;
+        }
+        .viz:hover { border-color: rgba(249,115,22,0.5); }
+        .viz canvas { display: block; width: 100%; aspect-ratio: 20 / 13; border-radius: 8px; }
+        .viz-legend {
+            display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem;
+            padding: 0.75rem 0.35rem 0.1rem; font-size: 0.76rem; color: var(--muted);
+        }
+        .viz-legend i {
+            display: inline-block; width: 14px; height: 3px; border-radius: 2px;
+            margin-right: 0.45rem; vertical-align: middle;
+        }
+        .viz-legend i.dash { height: 0; border-top: 2px dashed #777; border-radius: 0; }
+        .viz-legend i.sq { width: 10px; height: 10px; }
+        .viz-legend i.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--white); }
+        .viz-note { width: 100%; font-size: 0.72rem; color: #555; }
+
+        .more-head {
+            font-size: 0.78rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--muted); margin-bottom: 1.25rem;
+        }
+
+        @media (max-width: 900px) {
+            .feature { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; margin-bottom: 4rem; }
+            .feature.rev .copy { order: 0; }
+        }
         .proj-wip { font-size: 0.82rem; color: var(--muted); }
 
         /* ── CONTACT ── */
@@ -710,26 +759,21 @@
     <div class="section-inner">
         <div class="section-head fade-up">
             <p class="eyebrow">Build</p>
-            <h2>Personal Projects</h2>
+            <h2>Projects</h2>
             <div class="bar"></div>
         </div>
 
-        <div class="projects-grid">
-
-            <div class="proj-card fade-up">
-                <!-- drone SVG icon -->
-                <div class="proj-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="9" y="9" width="6" height="6" rx="1"/>
-                        <path d="M9 9L6 6M15 9l3-3M9 15l-3 3M15 15l3 3"/>
-                        <circle cx="5" cy="5" r="2.5"/>
-                        <circle cx="19" cy="5" r="2.5"/>
-                        <circle cx="5" cy="19" r="2.5"/>
-                        <circle cx="19" cy="19" r="2.5"/>
-                    </svg>
-                </div>
+        <!-- Drone -->
+        <article class="feature fade-up">
+            <div class="copy">
+                <p class="feature-kicker">ROS 2 · PX4 · Embedded CV</p>
                 <h3>Autonomous Drone Navigation &amp; CV Delivery</h3>
-                <p>Autonomous quadcopter for medicine delivery in rural areas, built for under $500. A PX4 flight controller is integrated with a ROS2 stack on a Raspberry Pi 5, with camera, perception, SLAM, and mission-planning nodes. A YOLOv6 detector runs on embedded hardware at 83% mAP for medicine detection. Airframe designed in SolidWorks.</p>
+                <p>An autonomous quadcopter that delivers medicine to rural areas, built for under $500. A PX4 flight controller runs alongside a ROS 2 stack on a Raspberry Pi 5, with the airframe designed in SolidWorks.</p>
+                <p>Camera, perception, SLAM, and mission-planning nodes publish and subscribe over ROS 2 topics. A YOLOv6 detector running on the onboard hardware finds the medicine package on arrival.</p>
+                <div class="feature-stats">
+                    <div><strong>83%</strong><span>mAP, medicine detection</span></div>
+                    <div><strong>&lt;$500</strong><span>total build cost</span></div>
+                </div>
                 <div class="proj-tags">
                     <span class="proj-tag">ROS2</span>
                     <span class="proj-tag">PX4</span>
@@ -739,18 +783,24 @@
                     <span class="proj-tag">SLAM</span>
                 </div>
             </div>
+            <figure class="viz">
+                <canvas id="vizDrone" role="img" aria-label="Animated top-down view of a Crazyflie drone taking off, flying a planned route around obstacles, and detecting a medicine package at the goal"></canvas>
+                <figcaption class="viz-legend">
+                    <span><i style="background:var(--orange)"></i>Flown path</span>
+                    <span><i class="dash"></i>Planned route</span>
+                    <span><i style="background:#38bdf8"></i>Camera view</span>
+                    <span class="viz-note">Simplified animation of a Crazyflie flying the delivery route, not real flight data.</span>
+                </figcaption>
+            </figure>
+        </article>
 
-            <div class="proj-card fade-up">
-                <!-- scanner SVG icon -->
-                <div class="proj-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="14" r="7"/>
-                        <circle cx="12" cy="14" r="2"/>
-                        <path d="M12 7V3M8 3h8"/>
-                    </svg>
-                </div>
+        <!-- TurtleBot3 -->
+        <article class="feature rev fade-up">
+            <div class="copy">
+                <p class="feature-kicker">ROS 2 · Navigation · Computer Vision</p>
                 <h3>TurtleBot3 Grocery Inventory Scanner</h3>
-                <p>ROS2-based autonomous inventory scanner on a TurtleBot3. An ML perception pipeline detects and classifies grocery items while coordinating with robot navigation, automating inventory monitoring in a simulated grocery store.</p>
+                <p>A TurtleBot3 that drives the aisles of a simulated grocery store and takes stock on its own. It follows a route down each aisle while an ML perception pipeline detects and classifies the products on the shelves.</p>
+                <p>Detection is coordinated with navigation, so every item is logged as the robot passes it, automating inventory monitoring.</p>
                 <div class="proj-tags">
                     <span class="proj-tag">ROS2</span>
                     <span class="proj-tag">C++</span>
@@ -758,59 +808,94 @@
                     <span class="proj-tag">PyTorch</span>
                     <span class="proj-tag">YOLO</span>
                 </div>
-                <a href="https://github.com/AdvityaCode/ros2_turtlebot3_grocery_inventory_scanner" target="_blank" class="proj-link">↗ View on GitHub</a>
-            </div>
-
-            <div class="proj-card fade-up">
-                <!-- robot SVG icon -->
-                <div class="proj-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="11" width="18" height="11" rx="2"/>
-                        <path d="M9 11V7a3 3 0 0 1 6 0v4"/>
-                        <circle cx="9" cy="16" r="1" fill="#f97316"/>
-                        <circle cx="15" cy="16" r="1" fill="#f97316"/>
-                        <path d="M7 22v1M17 22v1"/>
-                    </svg>
+                <div class="proj-links">
+                    <a href="https://github.com/AdvityaCode/ros2_turtlebot3_grocery_inventory_scanner" target="_blank" class="proj-link">↗ View on GitHub</a>
                 </div>
-                <h3>LimX Tron1 — Full Robot Software Stack</h3>
-                <p>End-to-end ROS2 software stack for the LimX Tron1 biped, including ros2_control joint actuation, SLAM-based navigation with real-time trajectory execution, and a cloud-connected WebSocket teleoperation interface.</p>
+            </div>
+            <figure class="viz">
+                <canvas id="vizTurtle" role="img" aria-label="Animated top-down view of a TurtleBot3 driving grocery store aisles with its LiDAR scan, detecting and counting products on the shelves"></canvas>
+                <figcaption class="viz-legend">
+                    <span><i style="background:#38bdf8"></i>LiDAR scan</span>
+                    <span><i class="sq" style="border:1.5px solid var(--orange)"></i>Detected item</span>
+                    <span class="viz-note">Simplified animation of the robot scanning a store, not recorded robot data.</span>
+                </figcaption>
+            </figure>
+        </article>
+
+        <!-- LimX Tron1 -->
+        <article class="feature fade-up">
+            <div class="copy">
+                <p class="feature-kicker">Crest Robotics · ROS 2 Humble · C++</p>
+                <h3>LimX Tron1 Robot Software Stack</h3>
+                <p>An end-to-end ROS 2 stack for the LimX Tron1, built from scratch at Crest Robotics in Sydney. It covers ros2_control joint actuation, SLAM-based localization and mapping from LiDAR and a ZED 2i stereo camera, and real-time navigation.</p>
+                <p>A cloud-connected, browser-based interface built on WebSockets handles remote teleoperation, telemetry streaming, and live image processing.</p>
+                <div class="feature-stats">
+                    <div><strong>17 ms</strong><span>control latency</span></div>
+                    <div><strong>3</strong><span>open repos</span></div>
+                </div>
                 <div class="proj-tags">
                     <span class="proj-tag">ROS2</span>
                     <span class="proj-tag">ros2_control</span>
                     <span class="proj-tag">C++</span>
                     <span class="proj-tag">SLAM</span>
                     <span class="proj-tag">LiDAR</span>
+                    <span class="proj-tag">ZED 2i</span>
                     <span class="proj-tag">WebSocket</span>
                 </div>
-                <span class="proj-wip">Crest Robotics · 2026</span>
                 <div class="proj-links">
-                    <a href="https://github.com/AdvityaCode/tron_ibis_stack" target="_blank" class="proj-link">↗ Main Stack on GitHub</a>
-                    <a href="https://github.com/AdvityaCode/crest_lidar_mapping" target="_blank" class="proj-link">↗ LiDAR Mapping on GitHub</a>
-                    <a href="https://github.com/AdvityaCode/crest_zed_mapping" target="_blank" class="proj-link">↗ ZED 2i Camera Mapping on GitHub</a>
+                    <a href="https://github.com/AdvityaCode/tron_ibis_stack" target="_blank" class="proj-link">↗ Main Stack</a>
+                    <a href="https://github.com/AdvityaCode/crest_lidar_mapping" target="_blank" class="proj-link">↗ LiDAR Mapping</a>
+                    <a href="https://github.com/AdvityaCode/crest_zed_mapping" target="_blank" class="proj-link">↗ ZED 2i Camera Mapping</a>
                 </div>
             </div>
+            <figure class="viz">
+                <canvas id="vizSlam" role="img" aria-label="Animated LiDAR SLAM: a biped robot walks through rooms while its scans build an occupancy map"></canvas>
+                <figcaption class="viz-legend">
+                    <span><i class="sq" style="background:var(--orange)"></i>Occupied</span>
+                    <span><i class="sq" style="background:#1e1e1e;border:1px solid #444"></i>Free space</span>
+                    <span><i style="background:#38bdf8"></i>LiDAR rays</span>
+                    <span><i class="dot"></i>Keyframes</span>
+                    <span class="viz-note">Simplified animation of LiDAR SLAM building a map, not recorded data.</span>
+                </figcaption>
+            </figure>
+        </article>
 
-            <div class="proj-card fade-up">
-                <div class="proj-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-                    </svg>
-                </div>
+        <!-- ros2_control bridge -->
+        <article class="feature rev fade-up">
+            <div class="copy">
+                <p class="feature-kicker">GSoC Proposal · ros2_control</p>
                 <h3>Physical AI Inference → ros2_control Bridge</h3>
-                <p>Proposed GSoC project: an Inference-to-Control Bridge within ros2_control that ingests ONNX-based motion policies (20–50Hz) and upscales them to high-frequency joint commands (up to 2kHz) via quintic spline / Minimum Jerk Trajectory interpolation, look-ahead buffering, and real-time jerk-limit monitors.</p>
+                <p>A proposed Inference-to-Control Bridge inside ros2_control. AI motion policies output joint targets at only 20–50 Hz, far too coarse to drive motors directly.</p>
+                <p>The bridge buffers upcoming targets and upsamples them into smooth joint commands at up to 2 kHz using quintic spline / minimum-jerk interpolation, with real-time jerk-limit monitors guarding the hardware.</p>
+                <div class="feature-stats">
+                    <div><strong>20–50 Hz</strong><span>policy output</span></div>
+                    <div><strong>2 kHz</strong><span>joint commands</span></div>
+                </div>
                 <div class="proj-tags">
                     <span class="proj-tag">ROS2</span>
                     <span class="proj-tag">ros2_control</span>
                     <span class="proj-tag">C++ / Eigen</span>
                     <span class="proj-tag">ONNX</span>
                     <span class="proj-tag">Physical AI</span>
-                    <span class="proj-tag">Trajectory Upscaling</span>
                 </div>
-                <span class="proj-wip">GSoC Proposal — 350 hrs</span>
                 <div class="proj-links">
                     <a href="https://github.com/AdvityaCode/ros2_control" target="_blank" class="proj-link">↗ View on GitHub</a>
+                    <span class="proj-wip">GSoC Proposal — 350 hrs</span>
                 </div>
             </div>
+            <figure class="viz">
+                <canvas id="vizBridge" role="img" aria-label="Animated plot of a low-rate stepped policy signal being upsampled into a smooth high-rate joint command, with a look-ahead buffer"></canvas>
+                <figcaption class="viz-legend">
+                    <span><i style="background:#888"></i>Policy output (25 Hz, held)</span>
+                    <span><i style="background:var(--orange)"></i>Upsampled command</span>
+                    <span><i class="sq" style="background:rgba(249,115,22,0.18)"></i>Look-ahead buffer</span>
+                    <span class="viz-note">Illustrative signal.</span>
+                </figcaption>
+            </figure>
+        </article>
+
+        <h3 class="more-head fade-up">More projects</h3>
+        <div class="projects-grid">
 
             <div class="proj-card fade-up">
                 <div class="proj-icon">🦠</div>
@@ -946,6 +1031,539 @@
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.12 });
     document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+    // ── Project visuals ──
+    // Each canvas draws in a 400×260 virtual space and only animates while on screen.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const VW = 400, VH = 260;
+    const COL = {
+        orange: '#f97316', orangeDim: 'rgba(249,115,22,0.4)', white: '#ededed',
+        muted: '#777777', line: '#2c2c2c', block: '#1a1a1a', cyan: '#38bdf8'
+    };
+    const MONO = 'ui-monospace, SFMono-Regular, Menlo, monospace';
+
+    function mountViz(id, draw, staticT) {
+        const canvas = document.getElementById(id);
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let running = false, raf = 0, scale = 1, ox = 0, oy = 0, dpr = 1;
+
+        function resize() {
+            const r = canvas.getBoundingClientRect();
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            canvas.width = Math.round(r.width * dpr);
+            canvas.height = Math.round(r.height * dpr);
+            scale = Math.min(r.width / VW, r.height / VH);
+            ox = (r.width - VW * scale) / 2;
+            oy = (r.height - VH * scale) / 2;
+        }
+        function render(t) {
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.setTransform(dpr * scale, 0, 0, dpr * scale, dpr * ox, dpr * oy);
+            ctx.globalAlpha = 1;
+            ctx.setLineDash([]);
+            draw(ctx, t);
+        }
+        function frame(ts) {
+            render(ts / 1000);
+            if (running) raf = requestAnimationFrame(frame);
+        }
+
+        new ResizeObserver(() => {
+            resize();
+            render(reduceMotion ? staticT : performance.now() / 1000);
+        }).observe(canvas);
+        if (reduceMotion) return;
+        new IntersectionObserver(([e]) => {
+            if (e.isIntersecting && !running) { running = true; raf = requestAnimationFrame(frame); }
+            else if (!e.isIntersecting) { running = false; cancelAnimationFrame(raf); }
+        }).observe(canvas);
+    }
+
+    // Drawing helpers
+    const ease = u => u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+
+    function rr(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+    }
+    function drawGrid(ctx) {
+        ctx.strokeStyle = 'rgba(249,115,22,0.05)';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        for (let x = 0; x <= VW; x += 20) { ctx.moveTo(x, 0); ctx.lineTo(x, VH); }
+        for (let y = 0; y <= VH; y += 20) { ctx.moveTo(0, y); ctx.lineTo(VW, y); }
+        ctx.stroke();
+    }
+    function hud(ctx, lines, x, y) {
+        ctx.font = `10px ${MONO}`;
+        ctx.textAlign = 'left';
+        const w = Math.max(...lines.map(l => ctx.measureText(l).width));
+        ctx.fillStyle = 'rgba(9,9,9,0.78)';
+        ctx.fillRect(x - 5, y - 11, w + 10, lines.length * 13 + 5);
+        ctx.fillStyle = COL.muted;
+        lines.forEach((l, i) => ctx.fillText(l, x, y + i * 13));
+    }
+    function detectTag(ctx, text, x, y, alignRight) {
+        ctx.font = `9px ${MONO}`;
+        ctx.textAlign = 'left';
+        const w = ctx.measureText(text).width + 8, lx = alignRight ? x - w : x;
+        ctx.fillStyle = COL.orange;
+        ctx.fillRect(lx, y - 10, w, 12);
+        ctx.fillStyle = '#000';
+        ctx.fillText(text, lx + 4, y - 1);
+    }
+    function brackets(ctx, x, y, hw, hh, alpha) {
+        const c = Math.min(hw, hh) * 0.6;
+        ctx.strokeStyle = `rgba(249,115,22,${alpha})`;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(([sx, sy]) => {
+            const cx = x + sx * hw, cy = y + sy * hh;
+            ctx.moveTo(cx, cy - sy * c); ctx.lineTo(cx, cy); ctx.lineTo(cx - sx * c, cy);
+        });
+        ctx.stroke();
+    }
+
+    // Path helpers: smooth a list of waypoints, then sample it by distance
+    function measure(pts) {
+        const cum = [0];
+        for (let i = 1; i < pts.length; i++)
+            cum.push(cum[i - 1] + Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y));
+        return { pts, cum, total: cum[cum.length - 1] };
+    }
+    function smoothPath(wps, perSeg) {
+        const out = [], n = wps.length;
+        const cr = (a, b, c, d, t) =>
+            0.5 * (2 * b + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (-a + 3 * b - 3 * c + d) * t * t * t);
+        for (let i = 0; i < n - 1; i++) {
+            const p0 = wps[Math.max(i - 1, 0)], p1 = wps[i], p2 = wps[i + 1], p3 = wps[Math.min(i + 2, n - 1)];
+            for (let j = 0; j < perSeg; j++) {
+                const t = j / perSeg;
+                out.push({ x: cr(p0[0], p1[0], p2[0], p3[0], t), y: cr(p0[1], p1[1], p2[1], p3[1], t) });
+            }
+        }
+        out.push({ x: wps[n - 1][0], y: wps[n - 1][1] });
+        return measure(out);
+    }
+    function chaikin(pts, iters) {
+        for (let k = 0; k < iters; k++) {
+            const out = [];
+            pts.forEach((p, i) => {
+                const q = pts[(i + 1) % pts.length];
+                out.push([p[0] * 0.75 + q[0] * 0.25, p[1] * 0.75 + q[1] * 0.25]);
+                out.push([p[0] * 0.25 + q[0] * 0.75, p[1] * 0.25 + q[1] * 0.75]);
+            });
+            pts = out;
+        }
+        return pts;
+    }
+    function pointAt(path, f) {
+        const { pts, cum, total } = path, d = Math.min(Math.max(f, 0), 1) * total;
+        let lo = 0, hi = pts.length - 2;
+        while (lo < hi) {
+            const mid = (lo + hi + 1) >> 1;
+            if (cum[mid] <= d) lo = mid; else hi = mid - 1;
+        }
+        const a = pts[lo], b = pts[lo + 1], u = (d - cum[lo]) / (cum[lo + 1] - cum[lo] || 1);
+        return { x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u, a: Math.atan2(b.y - a.y, b.x - a.x) };
+    }
+    function strokePath(ctx, path, f) {
+        const end = f * path.total;
+        ctx.beginPath();
+        ctx.moveTo(path.pts[0].x, path.pts[0].y);
+        for (let i = 1; i < path.pts.length && path.cum[i] <= end; i++) ctx.lineTo(path.pts[i].x, path.pts[i].y);
+        const p = pointAt(path, f);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+    }
+
+    // Ray casting for the LiDAR scenes
+    function rayBox(ox, oy, dx, dy, x, y, w, h) {
+        const t1 = (x - ox) / dx, t2 = (x + w - ox) / dx, t3 = (y - oy) / dy, t4 = (y + h - oy) / dy;
+        const tmin = Math.max(Math.min(t1, t2), Math.min(t3, t4));
+        const tmax = Math.min(Math.max(t1, t2), Math.max(t3, t4));
+        return tmax >= tmin && tmin > 0 ? tmin : Infinity;
+    }
+    function raySeg(ox, oy, dx, dy, x1, y1, x2, y2) {
+        const ex = x2 - x1, ey = y2 - y1, den = dx * ey - dy * ex;
+        if (Math.abs(den) < 1e-9) return Infinity;
+        const t = ((x1 - ox) * ey - (y1 - oy) * ex) / den;
+        const u = ((x1 - ox) * dy - (y1 - oy) * dx) / den;
+        return t > 0 && u >= 0 && u <= 1 ? t : Infinity;
+    }
+
+    // 1. Crazyflie flying a delivery route
+    const droneBlocks = [[70, 70, 50, 50], [190, 20, 50, 60], [270, 40, 35, 40], [140, 170, 45, 45], [255, 190, 55, 45], [330, 150, 45, 60]];
+    const droneWps = [[40, 215], [95, 200], [130, 140], [190, 115], [240, 170], [300, 150], [330, 90], [360, 55]];
+    const dronePath = smoothPath(droneWps, 16);
+
+    function drawCrazyflie(ctx, x, y, a, t, lift) {
+        const s = 0.85 + 0.15 * lift;
+        ctx.fillStyle = 'rgba(0,0,0,0.55)';
+        ctx.beginPath();
+        ctx.ellipse(x + 5 * lift, y + 7 * lift, 13 * s, 11 * s, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(a);
+        ctx.scale(s, s);
+        ctx.strokeStyle = '#cfcfcf';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(-9, -9); ctx.lineTo(9, 9);
+        ctx.moveTo(-9, 9); ctx.lineTo(9, -9);
+        ctx.stroke();
+        [[9, -9], [9, 9], [-9, 9], [-9, -9]].forEach(([rx, ry], i) => {
+            ctx.fillStyle = 'rgba(237,237,237,0.08)';
+            ctx.strokeStyle = 'rgba(237,237,237,0.35)';
+            ctx.lineWidth = 0.6;
+            ctx.beginPath(); ctx.arc(rx, ry, 6.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+            const r = t * 45 * (i % 2 ? 1 : -1) + i;
+            ctx.strokeStyle = 'rgba(237,237,237,0.75)';
+            ctx.lineWidth = 1.3;
+            ctx.beginPath();
+            ctx.moveTo(rx - Math.cos(r) * 5.5, ry - Math.sin(r) * 5.5);
+            ctx.lineTo(rx + Math.cos(r) * 5.5, ry + Math.sin(r) * 5.5);
+            ctx.stroke();
+        });
+        ctx.fillStyle = '#1d1d1d';
+        ctx.strokeStyle = COL.orange;
+        ctx.lineWidth = 1;
+        rr(ctx, -5, -4, 10, 8, 1.5); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = COL.orange;
+        ctx.fillRect(3.5, -3, 1.6, 1.6);
+        ctx.fillRect(3.5, 1.4, 1.6, 1.6);
+        ctx.restore();
+    }
+
+    mountViz('vizDrone', (ctx, t) => {
+        const T = 11, u = t % T;
+        const lift = Math.min(u, 1);
+        const fly = Math.min(Math.max((u - 1) / 7.5, 0), 1), f = ease(fly);
+        const alpha = Math.max(0, Math.min(u / 0.4, (T - u) / 0.6, 1));
+        const [hx, hy] = droneWps[0], [gx, gy] = droneWps[droneWps.length - 1];
+
+        drawGrid(ctx);
+        droneBlocks.forEach(([x, y, w, h]) => {
+            ctx.fillStyle = COL.block; ctx.fillRect(x, y, w, h);
+            ctx.strokeStyle = COL.line; ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+        });
+
+        // home pad and delivery target
+        ctx.strokeStyle = COL.muted; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(hx, hy, 12, 0, Math.PI * 2); ctx.stroke();
+        ctx.fillStyle = COL.muted; ctx.font = `bold 10px ${MONO}`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('H', hx, hy);
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = 'rgba(249,115,22,0.12)'; ctx.strokeStyle = COL.orangeDim;
+        rr(ctx, gx - 9, gy - 9, 18, 18, 3); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = COL.orange;
+        ctx.fillRect(gx - 1.2, gy - 5, 2.4, 10);
+        ctx.fillRect(gx - 5, gy - 1.2, 10, 2.4);
+
+        ctx.globalAlpha = alpha;
+        ctx.setLineDash([3, 4]);
+        ctx.strokeStyle = 'rgba(237,237,237,0.22)'; ctx.lineWidth = 1;
+        strokePath(ctx, dronePath, 1);
+        ctx.setLineDash([]);
+        ctx.fillStyle = 'rgba(237,237,237,0.35)';
+        droneWps.slice(1, -1).forEach(([x, y]) => ctx.fillRect(x - 1.5, y - 1.5, 3, 3));
+        ctx.strokeStyle = COL.orange; ctx.lineWidth = 1.6;
+        strokePath(ctx, dronePath, f);
+
+        const p = pointAt(dronePath, f);
+        ctx.fillStyle = 'rgba(56,189,248,0.09)';
+        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.arc(p.x, p.y, 58, p.a - 0.42, p.a + 0.42); ctx.closePath(); ctx.fill();
+
+        if (f > 0.8) {
+            const k = Math.min((f - 0.8) / 0.15, 1), hs = 14 + 12 * (1 - k);
+            brackets(ctx, gx, gy, hs, hs, k);
+            if (k === 1) detectTag(ctx, 'medicine 0.83', gx + 14, gy - 18, true);
+        }
+        drawCrazyflie(ctx, p.x, p.y, p.a, t, lift);
+        ctx.globalAlpha = 1;
+
+        const legs = droneWps.length - 1;
+        const status = u < 1 ? 'TAKEOFF' : fly < 1 ? 'EN ROUTE' : 'DELIVERED';
+        hud(ctx, ['crazyflie', `wp ${Math.min(legs, Math.floor(f * legs))}/${legs}`, status], 14, 22);
+    }, 9);
+
+    // 2. TurtleBot3 scanning grocery aisles
+    const shelves = [[60, 30, 280, 22], [60, 118, 280, 24], [60, 208, 280, 22]];
+    const tbPath = (() => {
+        const raw = chaikin([[50, 85], [350, 85], [372, 107], [372, 153], [350, 175], [50, 175], [28, 153], [28, 107]], 3);
+        const loop = measure([...raw, raw[0]].map(([x, y]) => ({ x, y })));
+        const dense = [];
+        for (let i = 0; i <= 800; i++) { const q = pointAt(loop, i / 800); dense.push({ x: q.x, y: q.y }); }
+        return measure(dense);
+    })();
+    const products = ['cereal', 'milk', 'pasta', 'soup', 'coffee', 'rice', 'juice', 'oats'];
+    const productCols = ['#4d6b5e', '#6d5a80', '#80703f', '#46607f', '#7f474d', '#5f6b45'];
+    const tbItems = [];
+    [[46, 85], [124, 85], [136, 175], [214, 175]].forEach(([y, aisle], side) => {
+        for (let i = 0, x = 72; x <= 328; i++, x += 20) {
+            let best = Infinity, p = 0;
+            tbPath.pts.forEach((q, j) => {
+                const d = Math.abs(q.y - aisle) < 4 ? Math.abs(q.x - x) : Infinity;
+                if (d < best) { best = d; p = tbPath.cum[j] / tbPath.total; }
+            });
+            tbItems.push({
+                x, y, aisle, side, p,
+                col: productCols[(i + side * 2) % 6],
+                label: `${products[(i * 3 + side) % 8]} 0.${84 + (i * 7 + side * 5) % 15}`
+            });
+        }
+    });
+
+    function wallHit(ox, oy, dx, dy) {
+        const tx = Math.abs(dx) < 1e-6 ? Infinity : dx > 0 ? (394 - ox) / dx : (6 - ox) / dx;
+        const ty = Math.abs(dy) < 1e-6 ? Infinity : dy > 0 ? (254 - oy) / dy : (6 - oy) / dy;
+        return Math.min(tx, ty);
+    }
+    function drawTurtlebot(ctx, x, y, a, t) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(a);
+        ctx.fillStyle = '#3a3a3a';
+        ctx.fillRect(-4, -11, 8, 3);
+        ctx.fillRect(-4, 8, 8, 3);
+        ctx.fillStyle = '#1d1d1d'; ctx.strokeStyle = '#cfcfcf'; ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.arc(0, 0, 9, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = COL.orange;
+        ctx.beginPath(); ctx.moveTo(9.5, 0); ctx.lineTo(5.5, -3); ctx.lineTo(5.5, 3); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = '#2b2b2b'; ctx.strokeStyle = COL.cyan; ctx.lineWidth = 0.8;
+        ctx.beginPath(); ctx.arc(0, 0, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.rotate(t * 6);
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(3.5, 0); ctx.stroke();
+        ctx.restore();
+    }
+
+    mountViz('vizTurtle', (ctx, t) => {
+        const prog = (t / 20) % 1, p = pointAt(tbPath, prog), FRESH = 0.04;
+
+        drawGrid(ctx);
+        ctx.strokeStyle = COL.line; ctx.lineWidth = 2; ctx.strokeRect(6, 6, 388, 248);
+        shelves.forEach(([x, y, w, h]) => {
+            ctx.fillStyle = COL.block; ctx.fillRect(x, y, w, h);
+            ctx.strokeStyle = COL.line; ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+        });
+
+        // 360° LiDAR
+        const hits = [];
+        ctx.strokeStyle = 'rgba(56,189,248,0.12)'; ctx.lineWidth = 0.6;
+        ctx.beginPath();
+        for (let i = 0; i < 60; i++) {
+            const a = (i / 60) * Math.PI * 2 + t * 0.6 + 0.01, dx = Math.cos(a), dy = Math.sin(a);
+            let d = Math.min(80, wallHit(p.x, p.y, dx, dy));
+            shelves.forEach(s => { d = Math.min(d, rayBox(p.x, p.y, dx, dy, ...s)); });
+            ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + dx * d, p.y + dy * d);
+            if (d < 80) hits.push([p.x + dx * d, p.y + dy * d]);
+        }
+        ctx.stroke();
+        ctx.fillStyle = COL.cyan;
+        hits.forEach(([x, y]) => ctx.fillRect(x - 0.8, y - 0.8, 1.6, 1.6));
+
+        // products: freshly detected ones get a box, a scan beam and a label
+        let scanned = 0;
+        const latest = {};
+        tbItems.forEach(it => {
+            const age = prog - it.p;
+            ctx.fillStyle = it.col; ctx.fillRect(it.x - 4, it.y - 4, 8, 8);
+            if (age < 0) return;
+            scanned++;
+            if (age < FRESH) {
+                const k = 1 - age / FRESH;
+                brackets(ctx, it.x, it.y, 7, 7, k);
+                ctx.strokeStyle = `rgba(249,115,22,${k * 0.5})`; ctx.lineWidth = 0.8;
+                ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(it.x, it.y); ctx.stroke();
+            } else {
+                ctx.strokeStyle = COL.orangeDim; ctx.lineWidth = 0.8;
+                ctx.strokeRect(it.x - 4.5, it.y - 4.5, 9, 9);
+            }
+            if (!latest[it.side] || it.p > latest[it.side].p) latest[it.side] = it;
+        });
+
+        drawTurtlebot(ctx, p.x, p.y, p.a, t);
+        Object.values(latest).forEach(it => {
+            if (prog - it.p < FRESH) detectTag(ctx, it.label, it.x - 8, it.y < it.aisle ? it.y - 7 : it.y + 17);
+        });
+        hud(ctx, [`items scanned ${scanned}/${tbItems.length}  ·  aisle ${p.y < 130 ? 1 : 2}`], 14, 246);
+    }, 13);
+
+    // 3. Tron1 building a LiDAR SLAM map
+    const slamWalls = [[10, 10, 390, 10], [390, 10, 390, 250], [390, 250, 10, 250], [10, 250, 10, 10],
+        [130, 10, 130, 100], [130, 150, 130, 250], [260, 10, 260, 90], [260, 140, 260, 250]];
+    [[60, 170, 35, 35], [180, 40, 35, 30], [300, 180, 50, 30], [310, 40, 35, 20]].forEach(([x, y, w, h]) =>
+        slamWalls.push([x, y, x + w, y], [x + w, y, x + w, y + h], [x + w, y + h, x, y + h], [x, y + h, x, y]));
+    const slamPath = smoothPath([[55, 50], [70, 125], [160, 125], [195, 190], [230, 115], [290, 115], [350, 90]], 16);
+    const CELL = 4, GW = VW / CELL, GH = VH / CELL;
+    const slamGrid = new Uint8Array(GW * GH);   // 0 unknown, 1 free, 2 occupied
+    const slamCanvas = document.createElement('canvas');
+    slamCanvas.width = GW; slamCanvas.height = GH;
+    const slamCtx = slamCanvas.getContext('2d'), slamImg = slamCtx.createImageData(GW, GH);
+    let slamDone = -1;   // path fraction already scanned into the grid
+
+    function castWalls(ox, oy, dx, dy, range) {
+        let d = range;
+        slamWalls.forEach(w => { d = Math.min(d, raySeg(ox, oy, dx, dy, ...w)); });
+        return d;
+    }
+    function markCell(x, y, v) {
+        const cx = x / CELL | 0, cy = y / CELL | 0;
+        if (cx < 0 || cy < 0 || cx >= GW || cy >= GH) return;
+        const i = cy * GW + cx;
+        if (slamGrid[i] < v) slamGrid[i] = v;
+    }
+    function slamScan(x, y) {
+        for (let i = 0; i < 120; i++) {
+            const a = (i / 120) * Math.PI * 2 + 0.013, dx = Math.cos(a), dy = Math.sin(a);
+            const d = castWalls(x, y, dx, dy, 90);
+            for (let s = 0; s < d; s += 2) markCell(x + dx * s, y + dy * s, 1);
+            if (d < 90) markCell(x + dx * (d + 0.5), y + dy * (d + 0.5), 2);
+        }
+    }
+    function drawTron(ctx, x, y, a, t, walking) {
+        const step = walking ? Math.sin(t * 9) * 3.5 : 0;
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(a);
+        ctx.fillStyle = '#4a4a4a';
+        ctx.fillRect(-4.5 + step, -7, 9, 3.2);
+        ctx.fillRect(-4.5 - step, 3.8, 9, 3.2);
+        ctx.fillStyle = '#1d1d1d'; ctx.strokeStyle = '#cfcfcf'; ctx.lineWidth = 1.2;
+        rr(ctx, -5, -8, 10, 16, 3); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = COL.orange; ctx.fillRect(4, -3, 1.6, 6);
+        ctx.fillStyle = COL.cyan;
+        ctx.beginPath(); ctx.arc(0, 0, 2, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+    }
+
+    mountViz('vizSlam', (ctx, t) => {
+        const T = 16, u = t % T, f = Math.min(u / 13, 1), KEY = 30;
+        const alpha = Math.max(0, Math.min(u / 0.4, (T - u) / 0.6, 1));
+
+        // integrate scans along the path since the last frame
+        if (f < slamDone) { slamGrid.fill(0); slamDone = -1; }
+        if (f > slamDone) {
+            const step = 6 / slamPath.total;
+            for (let g = Math.max(slamDone + step, 0); g < f; g += step) {
+                const q = pointAt(slamPath, g);
+                slamScan(q.x, q.y);
+            }
+            const q = pointAt(slamPath, f);
+            slamScan(q.x, q.y);
+            slamDone = f;
+        }
+
+        const d = slamImg.data;
+        let known = 0;
+        for (let i = 0; i < slamGrid.length; i++) {
+            const v = slamGrid[i], o = i * 4;
+            if (v) known++;
+            if (v === 2) { d[o] = 249; d[o + 1] = 115; d[o + 2] = 22; d[o + 3] = 255; }
+            else if (v === 1) { d[o] = 30; d[o + 1] = 30; d[o + 2] = 30; d[o + 3] = 255; }
+            else d[o + 3] = 0;
+        }
+        slamCtx.putImageData(slamImg, 0, 0);
+
+        drawGrid(ctx);
+        ctx.strokeStyle = 'rgba(237,237,237,0.07)'; ctx.lineWidth = 1;
+        ctx.beginPath();
+        slamWalls.forEach(([x1, y1, x2, y2]) => { ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); });
+        ctx.stroke();
+
+        ctx.globalAlpha = alpha;
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(slamCanvas, 0, 0, VW, VH);
+
+        ctx.strokeStyle = 'rgba(237,237,237,0.35)'; ctx.lineWidth = 1;
+        strokePath(ctx, slamPath, f);
+        ctx.fillStyle = COL.white;
+        for (let s = 0; s <= f * slamPath.total; s += KEY) {
+            const q = pointAt(slamPath, s / slamPath.total);
+            ctx.beginPath(); ctx.arc(q.x, q.y, 1.8, 0, Math.PI * 2); ctx.fill();
+        }
+
+        const p = pointAt(slamPath, f);
+        ctx.strokeStyle = 'rgba(56,189,248,0.15)'; ctx.lineWidth = 0.6;
+        ctx.beginPath();
+        for (let i = 0; i < 48; i++) {
+            const a = (i / 48) * Math.PI * 2 + t * 0.8, dx = Math.cos(a), dy = Math.sin(a);
+            const r = castWalls(p.x, p.y, dx, dy, 90);
+            ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + dx * r, p.y + dy * r);
+        }
+        ctx.stroke();
+        drawTron(ctx, p.x, p.y, p.a, t, f < 1);
+        ctx.globalAlpha = 1;
+
+        hud(ctx, ['lidar slam', `cells mapped ${known}`, `keyframes ${Math.floor(f * slamPath.total / KEY) + 1}`], 18, 222);
+    }, 14);
+
+    // 4. Low-rate policy output upsampled into a smooth joint command
+    mountViz('vizBridge', (ctx, t) => {
+        const DX = 34, off = t * 30, NOW = 285, MID = 132, AMP = 72, L = 14, R = 386;
+        const val = k => Math.sin(k * 0.55) * 0.55 + Math.sin(k * 0.23 + 1.3) * 0.35 + Math.sin(k * 1.31 + 0.4) * 0.1;
+        const sx = k => L + k * DX - off;
+        const sy = k => MID - val(k) * AMP;
+        const smooth = x => {
+            const kf = (x - L + off) / DX, k = Math.floor(kf), u = kf - k;
+            const p0 = val(k - 1), p1 = val(k), p2 = val(k + 1), p3 = val(k + 2);
+            return MID - AMP * 0.5 * (2 * p1 + (-p0 + p2) * u + (2 * p0 - 5 * p1 + 4 * p2 - p3) * u * u + (-p0 + 3 * p1 - 3 * p2 + p3) * u * u * u);
+        };
+        const curve = (from, to) => {
+            ctx.beginPath();
+            ctx.moveTo(from, smooth(from));
+            for (let x = from + 2; x <= to; x += 2) ctx.lineTo(x, smooth(x));
+            ctx.stroke();
+        };
+
+        drawGrid(ctx);
+        ctx.fillStyle = 'rgba(249,115,22,0.06)';
+        ctx.fillRect(NOW, 30, R - NOW, 205);
+        ctx.strokeStyle = 'rgba(237,237,237,0.35)'; ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+        ctx.beginPath(); ctx.moveTo(NOW, 30); ctx.lineTo(NOW, 235); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.font = `9px ${MONO}`; ctx.fillStyle = COL.muted;
+        ctx.textAlign = 'left'; ctx.fillText('look-ahead buffer', NOW + 6, 44);
+        ctx.textAlign = 'right'; ctx.fillText('now', NOW - 5, 44);
+        ctx.fillText('time →', R, 252);
+
+        ctx.save();
+        ctx.beginPath(); ctx.rect(L, 0, R - L, VH); ctx.clip();
+        const k0 = Math.floor(off / DX) - 1, k1 = k0 + Math.ceil((R - L) / DX) + 2;
+        ctx.strokeStyle = 'rgba(237,237,237,0.28)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(sx(k0), sy(k0));
+        for (let k = k0; k < k1; k++) { ctx.lineTo(sx(k + 1), sy(k)); ctx.lineTo(sx(k + 1), sy(k + 1)); }
+        ctx.stroke();
+        ctx.strokeStyle = COL.orange; ctx.lineWidth = 2;
+        curve(L, NOW);
+        ctx.strokeStyle = COL.orangeDim; ctx.lineWidth = 1.5; ctx.setLineDash([4, 3]);
+        curve(NOW, R);
+        ctx.setLineDash([]);
+        for (let k = k0; k <= k1; k++) {
+            const x = sx(k);
+            ctx.beginPath(); ctx.arc(x, sy(k), 2.6, 0, Math.PI * 2);
+            if (x <= NOW) { ctx.fillStyle = COL.white; ctx.fill(); }
+            else { ctx.strokeStyle = COL.white; ctx.lineWidth = 1; ctx.stroke(); }
+        }
+        ctx.restore();
+
+        const ny = smooth(NOW);
+        ctx.strokeStyle = 'rgba(249,115,22,0.35)'; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(NOW, ny, 7, 0, Math.PI * 2); ctx.stroke();
+        ctx.fillStyle = COL.orange;
+        ctx.beginPath(); ctx.arc(NOW, ny, 3.5, 0, Math.PI * 2); ctx.fill();
+        hud(ctx, ['policy 25 Hz → cmd 2 kHz', 'jerk limit  OK'], 20, 24);
+    }, 3);
 
     // Contact form — submits to Formspree and shows confirmation UI
     async function handleSubmit(e) {
